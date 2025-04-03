@@ -1,0 +1,54 @@
+syntax = "proto3"; // proto syntax version.
+
+option csharp_namespace = "GrpcProductService.Protos"; // unique namespace for protos, e.g. <projectName>.Protos will do the job.
+
+import "google/protobuf/empty.proto"; // empty proto namespace use to call google.protobuf.Empty
+
+package product; // unique package name within project.
+
+message Product // message is type keyword just like class use for defining request and response objects/types, and these 1,2,3,4 are unique property labels used by protos to handle data well, and letter-casing won't matter as if you'll write id or Id, name or Name, it doesn't matter becoz the code that'll generated will be according to best practices.
+{
+	int32 id = 1;
+	string name = 2;
+	string description = 3;
+	double price = 4;
+}
+
+message GetProductRequest 
+{
+	int32 id = 1;
+}
+
+message ProductListResponse 
+{
+	repeated Product products = 1;
+}
+
+message CreateProductRequest
+{
+	string name = 1;
+	string description = 2;
+	double price = 3;
+}
+
+message UpdateProductRequest
+{
+	int32 id = 1;
+	string name = 2;
+	string description = 3;
+	double price = 4;
+}
+
+message DeleteProductRequest 
+{
+	int32 id = 1;
+}
+
+service ProductProtoService // service is type keyword just like class use for defining service interface/abstract, and rpc use for defining method interface and what it'll return.
+{
+	rpc GetProduct(GetProductRequest) returns (Product);
+	rpc GetProducts(google.protobuf.Empty) returns (ProductListResponse);
+	rpc CreateProduct(CreateProductRequest) returns (Product);
+	rpc UpdateProduct(UpdateProductRequest) returns (Product);
+	rpc DeleteProduct(DeleteProductRequest) returns (google.protobuf.Empty);
+}

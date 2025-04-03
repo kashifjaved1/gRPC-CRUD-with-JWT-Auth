@@ -1,0 +1,19 @@
+// Need proto syntax guidance - checkout the product.proto file.
+
+syntax = "proto3";
+
+option csharp_namespace = "GrpcProductService.Protos";
+
+import "google/protobuf/empty.proto";
+
+package auth;
+
+message CreateIdentityResponse
+{
+	string token = 1;
+}
+
+service AuthProtoService
+{
+	rpc GenerateToken(google.protobuf.Empty) returns(CreateIdentityResponse);
+}
